@@ -615,9 +615,11 @@ async function generateHashtags(){
   document.getElementById("hashResult").innerHTML="";
 
   const key=localStorage.getItem("ant_key")||"";
-  const headers={"Content-Type":"application/json"};
-  if(key) headers["x-api-key"]=key;
-
+  const headers={
+  "Content-Type":"application/json",
+  "anthropic-dangerous-direct-browser-access":"true"
+};
+if(key) headers["x-api-key"]=key;
   try{
     const res=await fetch("https://api.anthropic.com/v1/messages",{
       method:"POST",
