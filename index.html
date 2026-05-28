@@ -636,7 +636,8 @@ After searching, respond ONLY with JSON (no other text):
     });
     const d=await res.json();
     // collect all text blocks
-    const allText=d.content.filter(c=>c.type==="text").map(c=>c.text).join("");
+    if(!d || !d.content) throw new Error(d?.error?.message||"API yanıt vermedi");
+const allText=(d.content||[]).filter(c=>c&&c.type==="text").map(c=>c.text||"").join("");
     const match=allText.match(/\{[\s\S]*\}/);
     if(!match) throw new Error("JSON bulunamadı");
     const parsed=JSON.parse(match[0]);
