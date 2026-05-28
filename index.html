@@ -7,21 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;1,400&family=Bebas+Neue&family=Raleway:wght@300;700&family=Shadows+Into+Light&family=Great+Vibes&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#080b13;--s1:#0d1020;--s2:#121520;--s3:#181c2c;
-  --b:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);
-  --a:#7c9cff;--a2:#b47fff;--t:#e0e4f5;--m:#5a6580;--ok:#4ade80
-}
+:root{--bg:#080b13;--s1:#0d1020;--s2:#121520;--s3:#181c2c;--b:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);--a:#7c9cff;--a2:#b47fff;--t:#e0e4f5;--m:#5a6580;--ok:#4ade80}
 body{background:var(--bg);font-family:'Montserrat',sans-serif;color:var(--t);min-height:100vh}
 .app{min-height:100vh;background:radial-gradient(ellipse 80% 60% at 5% -5%,rgba(100,60,220,.12) 0%,transparent 55%),radial-gradient(ellipse 60% 50% at 95% 105%,rgba(60,80,200,.10) 0%,transparent 50%),var(--bg)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--b);background:rgba(8,11,19,.9);backdrop-filter:blur(12px);position:sticky;top:0;z-index:10}
 .logo{font-size:14px;font-weight:700}
 .logo span{background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-btns{display:flex;gap:7px;align-items:center}
+.nav-btns{display:flex;gap:7px}
 .btn-sm{background:var(--s2);border:1px solid var(--b);border-radius:7px;padding:6px 11px;color:var(--t);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;cursor:pointer;transition:all .15s}
 .btn-sm:hover{border-color:var(--a);color:var(--a)}
 .main{max-width:1060px;margin:0 auto;padding:16px 12px 60px}
-/* UPLOAD */
 .upload-wrap{max-width:440px;margin:32px auto;text-align:center}
 .upload-wrap h1{font-size:clamp(24px,5vw,40px);font-weight:700;margin-bottom:7px}
 .upload-wrap h1 span{background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -31,10 +26,8 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;color:var(--t);min
 .drop-icon{font-size:40px;display:block;margin-bottom:10px}
 .drop-zone h3{font-size:15px;font-weight:600;margin-bottom:5px}
 .drop-zone p{color:var(--m);font-size:11px}
-/* EDITOR */
 .editor{display:grid;grid-template-columns:1fr 316px;gap:12px;align-items:start}
 @media(max-width:700px){.editor{grid-template-columns:1fr}}
-/* VIDEO */
 .canvas-wrap{position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:9/16;max-height:76vh;box-shadow:0 18px 55px rgba(0,0,0,.7)}
 .canvas-wrap canvas{width:100%;height:100%;object-fit:contain;display:block;cursor:grab}
 .canvas-wrap canvas.dragging{cursor:grabbing}
@@ -45,7 +38,6 @@ body{background:var(--bg);font-family:'Montserrat',sans-serif;color:var(--t);min
 .pbar{flex:1;height:3px;background:rgba(255,255,255,.2);border-radius:3px;cursor:pointer}
 .pfill{height:100%;background:var(--a);border-radius:3px}
 .ttime{color:rgba(255,255,255,.6);font-size:10px;flex-shrink:0;font-family:monospace}
-/* PANEL */
 .panel{display:flex;flex-direction:column;gap:9px}
 .tabs{display:flex;background:var(--s2);border-radius:10px;padding:3px;border:1px solid var(--b)}
 .tab{flex:1;padding:7px 2px;border:none;border-radius:7px;background:transparent;color:var(--m);font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .15s}
@@ -74,51 +66,28 @@ input[type=range]{width:100%;accent-color:var(--a)}
 .bg-chip .bl{font-size:9px;color:var(--m)}
 .bg-chip.sel{border-color:var(--a);background:rgba(124,156,255,.1)}
 .bg-chip.sel .bl{color:var(--a)}
-/* PROFILE CARD */
-.avatar-upload{
-  width:72px;height:72px;border-radius:50%;border:2px dashed var(--b2);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  flex-shrink:0;transition:all .2s;overflow:hidden;background:var(--s3)
-}
+.avatar-upload{width:72px;height:72px;border-radius:50%;border:2px dashed var(--b2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s;overflow:hidden;background:var(--s3)}
 .avatar-upload:hover{border-color:var(--a)}
 .avatar-upload img{width:100%;height:100%;object-fit:cover}
-.avatar-placeholder{font-size:22px}
 .card-info-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .card-fields{flex:1}
 .hint-box{background:rgba(124,156,255,.06);border:1px solid rgba(124,156,255,.15);border-radius:8px;padding:8px 10px;font-size:10px;color:var(--m);line-height:1.5;margin-top:8px}
 .hint-box strong{color:var(--a);display:block;margin-bottom:3px}
 /* HASHTAG */
-.hash-desc{width:100%;background:var(--s3);border:1px solid var(--b);border-radius:8px;padding:8px 10px;color:var(--t);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;transition:border-color .2s;margin-bottom:8px}
-.hash-desc:focus{border-color:rgba(124,156,255,.4)}
-.hash-desc::placeholder{color:var(--m)}
-.btn-gen{width:100%;padding:10px;background:linear-gradient(135deg,#4b6dff,#8b4fff);border:none;border-radius:9px;color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.04em}
-.btn-gen:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(75,109,255,.35)}
-.btn-gen:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.lbar{width:100%;height:2px;background:var(--b);border-radius:2px;overflow:hidden;margin:6px 0}
-.lbar-f{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));animation:lb 1.2s ease-in-out infinite}
-@keyframes lb{0%{width:0;margin-left:0}50%{width:55%;margin-left:20%}100%{width:0;margin-left:100%}}
-.hcloud{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
-.htag{background:rgba(124,156,255,.07);border:1px solid rgba(124,156,255,.18);border-radius:5px;padding:3px 8px;font-size:10px;color:var(--a);cursor:pointer;transition:all .15s;user-select:none}
+.cat-scroll{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none}
+.cat-scroll::-webkit-scrollbar{display:none}
+.cat-btn{flex-shrink:0;background:var(--s3);border:1px solid var(--b);border-radius:20px;padding:6px 12px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:var(--m);transition:all .15s;white-space:nowrap}
+.cat-btn.sel{border-color:var(--a);background:rgba(124,156,255,.12);color:var(--a)}
+.hcloud{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.htag{background:rgba(124,156,255,.07);border:1px solid rgba(124,156,255,.18);border-radius:5px;padding:4px 9px;font-size:11px;color:var(--a);cursor:pointer;transition:all .15s;user-select:none}
 .htag:hover{background:rgba(124,156,255,.15)}
 .htag.cp{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25);color:var(--ok)}
-.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .btn-copy{background:var(--s3);border:1px solid var(--b);border-radius:6px;padding:5px 9px;color:var(--m);font-family:'Montserrat',sans-serif;font-size:10px;cursor:pointer;font-weight:700}
 .btn-copy:hover{border-color:var(--a);color:var(--a)}
-/* API KEY MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
-.modal{background:var(--s1);border:1px solid var(--b2);border-radius:18px;padding:24px;max-width:400px;width:100%}
-.modal h3{font-size:16px;font-weight:700;margin-bottom:8px}
-.modal p{font-size:12px;color:var(--m);line-height:1.6;margin-bottom:16px}
-.modal-btns{display:flex;gap:8px;margin-top:14px}
-.btn-ok{flex:1;padding:10px;background:linear-gradient(135deg,#4b6dff,#8b4fff);border:none;border-radius:9px;color:#fff;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
-.btn-cancel{padding:10px 16px;background:var(--s3);border:1px solid var(--b);border-radius:9px;color:var(--m);font-family:'Montserrat',sans-serif;font-size:12px;cursor:pointer}
-.api-status{font-size:10px;margin-top:8px;padding:6px 10px;border-radius:6px}
-.api-ok{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);color:var(--ok)}
-.api-no{background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);color:#fb923c}
-/* DOWNLOAD */
+.free-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:6px;padding:4px 10px;font-size:10px;color:var(--ok);margin-bottom:10px}
 .dl-btn{width:100%;padding:13px;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;border-radius:11px;color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.04em;margin-top:9px}
 .dl-btn:hover{transform:translateY(-1px);box-shadow:0 7px 22px rgba(34,197,94,.35)}
-.dl-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .dl-prog{background:var(--s1);border:1px solid var(--b);border-radius:11px;padding:12px;text-align:center;margin-top:9px}
 .dl-pbar{width:100%;height:4px;background:var(--b);border-radius:3px;overflow:hidden;margin:7px 0}
 .dl-pfill{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:3px;transition:width .3s}
@@ -129,35 +98,18 @@ input[type=range]{width:100%;accent-color:var(--a)}
 </head>
 <body>
 <div class="app">
-
-<!-- API KEY MODAL -->
-<div class="modal-bg" id="apiModal" style="display:none">
-  <div class="modal">
-    <h3>🔑 Anthropic API Anahtarı</h3>
-    <p>Hashtag üretmek için Anthropic API anahtarın gerekli. <a href="https://console.anthropic.com" target="_blank" style="color:var(--a)">console.anthropic.com</a> adresinden ücretsiz alabilirsin. Anahtar sadece senin tarayıcında saklanır.</p>
-    <input class="tinput" id="apiKeyInput" placeholder="sk-ant-..." type="password" style="margin-bottom:4px"/>
-    <div id="apiStatus"></div>
-    <div class="modal-btns">
-      <button class="btn-ok" onclick="saveApiKey()">Kaydet</button>
-      <button class="btn-cancel" onclick="closeModal()">İptal</button>
-    </div>
-  </div>
-</div>
-
 <nav class="nav">
   <div class="logo">Hisset <span>&amp; Viral Ol</span></div>
   <div class="nav-btns">
-    <button class="btn-sm" onclick="openModal()">🔑 API</button>
-    <button class="btn-sm" id="btnNew" style="display:none" onclick="resetApp()">↩ Yeni</button>
+    <button class="btn-sm" id="btnNew" style="display:none" onclick="resetApp()">↩ Yeni Video</button>
   </div>
 </nav>
-
 <div class="main">
 
-<!-- UPLOAD SCREEN -->
+<!-- UPLOAD -->
 <div class="upload-wrap fade" id="uploadScreen">
   <h1>Video <span>Editörü</span></h1>
-  <p>Arka plan · Metin · İmza kartı · Viral hashtag</p>
+  <p>Arka plan · Metin · İmza kartı · Hashtag</p>
   <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
     <span class="drop-icon">🎬</span>
     <h3>Videoyu sürükle veya tıkla</h3>
@@ -166,12 +118,10 @@ input[type=range]{width:100%;accent-color:var(--a)}
   <input type="file" id="fileInput" accept="video/*" style="display:none"/>
 </div>
 
-<!-- EDITOR SCREEN -->
+<!-- EDITOR -->
 <div class="editor fade" id="editorScreen" style="display:none">
-
-  <!-- VIDEO COL -->
   <div>
-    <div class="canvas-wrap" id="canvasWrap">
+    <div class="canvas-wrap">
       <video id="vid" playsinline preload="auto"></video>
       <canvas id="cv"></canvas>
       <div class="controls">
@@ -195,7 +145,6 @@ input[type=range]{width:100%;accent-color:var(--a)}
     </div>
   </div>
 
-  <!-- PANEL -->
   <div class="panel">
     <div class="tabs">
       <button class="tab on" onclick="switchTab('text',this)">📝 METİN</button>
@@ -204,7 +153,7 @@ input[type=range]{width:100%;accent-color:var(--a)}
       <button class="tab"    onclick="switchTab('hash',this)"># HASHTAG</button>
     </div>
 
-    <!-- TEXT TAB -->
+    <!-- TEXT -->
     <div class="card" id="tabText">
       <div class="clabel">Metin</div>
       <textarea id="overlayText" rows="3" placeholder="Videoya eklenecek yazı..." oninput="rf()" style="margin-bottom:8px"></textarea>
@@ -227,24 +176,24 @@ input[type=range]{width:100%;accent-color:var(--a)}
       <button class="toggle-btn on" id="bgToggle" onclick="toggleTxtBg()">✓ Metin Arka Planı Açık</button>
     </div>
 
-    <!-- BG TAB -->
+    <!-- BG -->
     <div class="card" id="tabBg" style="display:none">
       <div class="clabel">Filtre</div>
       <div class="bg-grid" id="bgGrid"></div>
       <div class="clabel">Kendi Resmin</div>
-      <div class="upload-mini" style="border:1px dashed var(--b2);border-radius:8px;padding:10px;text-align:center;cursor:pointer;font-size:11px;color:var(--m);transition:all .18s" onclick="document.getElementById('bgImgInput').click()" onmouseover="this.style.borderColor='var(--a2)'" onmouseout="this.style.borderColor='var(--b2)'">
+      <div style="border:1px dashed var(--b2);border-radius:8px;padding:10px;text-align:center;cursor:pointer;font-size:11px;color:var(--m)" onclick="document.getElementById('bgImgInput').click()">
         <span id="bgImgLbl">🖼️ Arka plan resmi yükle</span>
       </div>
       <input type="file" id="bgImgInput" accept="image/*" style="display:none"/>
     </div>
 
-    <!-- CARD / İMZA TAB -->
+    <!-- CARD -->
     <div class="card" id="tabCard" style="display:none">
       <div class="clabel">Profil Fotoğrafı</div>
       <div class="card-info-row">
-        <div class="avatar-upload" id="avatarUpload" onclick="document.getElementById('avatarInput').click()">
+        <div class="avatar-upload" onclick="document.getElementById('avatarInput').click()">
           <img id="avatarPreview" style="display:none"/>
-          <span class="avatar-placeholder" id="avatarPlaceholder">📷</span>
+          <span id="avatarPlaceholder" style="font-size:22px">📷</span>
         </div>
         <div class="card-fields">
           <input class="tinput" id="cardName" placeholder="neysebacimm" oninput="rf()" style="margin-bottom:6px"/>
@@ -255,71 +204,60 @@ input[type=range]{width:100%;accent-color:var(--a)}
       <button class="toggle-btn on" id="cardToggle" onclick="toggleCard()">✓ İmza Kartı Görünür</button>
       <div class="hint-box">
         <strong>💡 Nasıl taşınır?</strong>
-        Videoyu izlerken kartın üzerine bas ve istediğin yere sürükle
+        Kartın üzerine bas ve istediğin yere sürükle
       </div>
     </div>
 
-    <!-- HASHTAG TAB -->
+    <!-- HASHTAG -->
     <div class="card" id="tabHash" style="display:none">
-      <div id="apiKeyStatus"></div>
-      <div class="clabel" style="margin-top:4px">Video Konusu</div>
-      <input class="hash-desc" id="hashDesc" placeholder="Ör: yağmurlu gece, özlem, eski arkadaş..."/>
-      <button class="btn-gen" id="btnGen" onclick="generateHashtags()">🔍 TikTok'u Tara & Hashtag Üret</button>
-      <div class="lbar" id="genLoader" style="display:none"><div class="lbar-f"></div></div>
+      <div class="free-badge">✓ Ücretsiz · API gerekmez</div>
+      <div class="clabel">Kategori Seç</div>
+      <div class="cat-scroll" id="catScroll"></div>
       <div id="hashResult"></div>
     </div>
-
   </div>
 </div>
 </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════
-const S = {
-  fontIdx:0, textPos:"bottom", textColor:"#ffffff", fontSize:36, showBg:true,
-  bgEffect:"none", bgImage:null,
-  card:{ visible:true, img:null, name:"", handle:"", x:0.04, y:0.84, dragging:false, ox:0, oy:0 },
-  playing:false, rafId:null
+// ══ STATE ══════════════════════════════════
+const S={
+  fontIdx:0,textPos:"bottom",textColor:"#ffffff",fontSize:36,showBg:true,bgEffect:"none",
+  card:{visible:true,img:null,x:0.04,y:0.84,dragging:false,ox:0,oy:0},
+  playing:false,rafId:null
 };
 
-const FONTS=[
-  {l:"Montserrat",  f:"Montserrat"},
-  {l:"Playfair",    f:"Playfair Display"},
-  {l:"El Yazısı",   f:"Dancing Script"},
-  {l:"Bebas",       f:"Bebas Neue"},
-  {l:"Raleway",     f:"Raleway"},
-  {l:"Karakalem",   f:"Shadows Into Light"},
-  {l:"Great Vibes", f:"Great Vibes"},
-];
+// ══ HASHTAG DATABASE ══════════════════════
+const TAGS={
+  "🌙 Hüzün":["#hüzün","#hüzünlü","#hüzünlüanlar","#hüzünlümüzik","#hüzünlüsözler","#üzgün","#gözyaşı","#ağlamak","#kalbimağrıyor","#içimyanıyor","#acıveriyor","#derinden","#yüreğimde","#kederli","#mahzun","#gamzede","#buruk","#içimdaraldı","#ruhumsıkıştı","#melankolik"],
+  "💔 Ayrılık":["#ayrılık","#kalbimkırık","#vedaetmek","#gitmişsin","#kırıkkalp","#bitmişaşk","#geçmişte","#artıkyoksun","#eksiksen","#onsuz","#hasret","#özlüyorum","#gitmeydin","#bitiş","#elveda","#sonbakış","#gideraydın","#artıkyok","#sevseydin","#kaldıyalnız"],
+  "🌃 Gece":["#gece","#gececidden","#gece3","#geceyarısı","#uykusuzgece","#gecekaranlık","#sessizlik","#tenhalık","#yalnızgece","#sabahagelemek","#karanlık","#gececenaze","#geceninkarası","#sabahakarşı","#gözlerimizli","#suskunluk","#geceyle","#karasevda","#karanlıkgece","#uyanık"],
+  "🍂 Nostalji":["#nostalji","#anılar","#geçmiş","#hatıra","#eskigünler","#zamanzamanönce","#çocukluk","#güzeldi","#neredeo","#zamanageçti","#eskiler","#anılarım","#kayıpgünler","#unutamıyorum","#zihnimde","#hatırlıyorum","#özlüyorum","#geriyedönsem","#zamantersine","#maziden"],
+  "😔 Yalnızlık":["#yalnızlık","#yalnız","#yapayalnız","#kimseyok","#anlamıyor","#sessizce","#kendimle","#yalnızbiri","#yoruldum","#bıktım","#artıkyeter","#dayanamıyorum","#boğuluyorum","#bunalım","#introvert","#içimdesaklı","#sessizağlıyorum","#kimseduymaz","#içimdeyim","#izole"],
+  "🔥 Keşfet":["#keşfet","#keşfetteyiz","#fyp","#foryou","#viral","#trending","#türkiye","#türk","#tiktok","#reels","#keşfetbeni","#viraltürkiye","#trendingturkiye","#fypage","#fypシ","#viralvideo","#türktiktok","#keşfetgönder","#turkishreels","#tiktokturkey"],
+  "🎵 Müzik":["#müzik","#şarkı","#türkçemüzik","#müziksevgisi","#şarkısözleri","#sözler","#dinlerken","#melodim","#his","#duygu","#sadmusic","#lofimusic","#müziğim","#notalar","#soundtrack","#müzikle","#çalarken","#kalbimdesesen","#şarkımdaki","#acıklımüzik"],
+  "✨ Estetik":["#aesthetic","#darkesthetic","#sadaesthetic","#moodygram","#moody","#atmosfer","#filmphotography","#grain","#darkphoto","#vintage","#retro","#grunge","#alternative","#indie","#artsy","#cinematik","#sinematik","#film","#siyahbeyaz","#editgram"],
+  "💫 Motivasyon":["#motivasyon","#güçlükal","#devamettir","#yılma","#başarı","#ilerliyorum","#kendinigeliştir","#dönüşüm","#güçlüyüm","#inanıyorum","#hedef","#azim","#kararlılık","#başarıyorum","#ilerle","#kalkayağa","#sabır","#zamangelecek","#inan","#vazgeçme"],
+};
+
+const FONTS=[{l:"Montserrat",f:"Montserrat"},{l:"Playfair",f:"Playfair Display"},{l:"El Yazısı",f:"Dancing Script"},{l:"Bebas",f:"Bebas Neue"},{l:"Raleway",f:"Raleway"},{l:"Karakalem",f:"Shadows Into Light"},{l:"Great Vibes",f:"Great Vibes"}];
 const COLORS=["#ffffff","#000000","#f8d7ff","#d0e8ff","#ffe4c4","#ffb3b3","#c8ffd4"];
-const BGS=[
-  {id:"none",  i:"🎬",l:"Orijinal"},
-  {id:"dark",  i:"🌑",l:"Karartma"},
-  {id:"blur",  i:"🌫️",l:"Bulanık"},
-  {id:"blue",  i:"💙",l:"Mavi"},
-  {id:"purple",i:"💜",l:"Mor"},
-  {id:"bw",    i:"🎞️",l:"S/B"},
-  {id:"night", i:"🌌",l:"Gece"},
-  {id:"sepia", i:"🍂",l:"Sepia"},
-];
+const BGS=[{id:"none",i:"🎬",l:"Orijinal"},{id:"dark",i:"🌑",l:"Karartma"},{id:"blur",i:"🌫️",l:"Bulanık"},{id:"blue",i:"💙",l:"Mavi"},{id:"purple",i:"💜",l:"Mor"},{id:"bw",i:"🎞️",l:"S/B"},{id:"night",i:"🌌",l:"Gece"},{id:"sepia",i:"🍂",l:"Sepia"}];
 
 const vid=document.getElementById("vid");
 const cv=document.getElementById("cv");
 const ctx=cv.getContext("2d");
 let bgImgObj=null;
+let selectedTags=new Set();
 
-// ══════════════════════════════════════════════
-// BUILD UI
-// ══════════════════════════════════════════════
+// ══ BUILD UI ═══════════════════════════════
 // Font grid
 const fgEl=document.getElementById("fontGrid");
 FONTS.forEach((f,i)=>{
   const d=document.createElement("div");
   d.className="font-chip"+(i===0?" sel":"");
-  d.style.fontFamily=f.f; d.textContent=f.l;
+  d.style.fontFamily=f.f;d.textContent=f.l;
   d.onclick=()=>{document.querySelectorAll(".font-chip").forEach(x=>x.classList.remove("sel"));d.classList.add("sel");S.fontIdx=i;rf();};
   fgEl.appendChild(d);
 });
@@ -356,7 +294,7 @@ document.getElementById("bgImgInput").addEventListener("change",e=>{
   document.getElementById("bgImgLbl").textContent="✓ "+f.name;
 });
 
-// Avatar upload
+// Avatar
 document.getElementById("avatarInput").addEventListener("change",e=>{
   const f=e.target.files[0];if(!f) return;
   const img=new Image();
@@ -370,39 +308,64 @@ document.getElementById("avatarInput").addEventListener("change",e=>{
   img.src=URL.createObjectURL(f);
 });
 
-// ══════════════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════════════
-function rf(){ /* alias */ renderFrame(); }
+// Hashtag categories
+const cs=document.getElementById("catScroll");
+Object.keys(TAGS).forEach(cat=>{
+  const b=document.createElement("button");
+  b.className="cat-btn";b.textContent=cat;
+  b.onclick=()=>{
+    document.querySelectorAll(".cat-btn").forEach(x=>x.classList.remove("sel"));
+    b.classList.add("sel");
+    showTags(TAGS[cat]);
+  };
+  cs.appendChild(b);
+});
+
+function showTags(tags){
+  const el=document.getElementById("hashResult");
+  el.innerHTML=`
+    <div class="top-row">
+      <span style="font-size:10px;color:var(--m)">${tags.length} hashtag · tıkla kopyala</span>
+      <button class="btn-copy" onclick="cpAll(${JSON.stringify(tags)})">Hepsini Kopyala</button>
+    </div>
+    <div class="hcloud">${tags.map(t=>`<span class="htag" onclick="cpTag(this,'${t}')">${t}</span>`).join("")}</div>`;
+}
+
+function cpTag(el,t){
+  navigator.clipboard.writeText(t).catch(()=>{});
+  const o=el.textContent;el.className="htag cp";el.textContent="✓";
+  setTimeout(()=>{el.className="htag";el.textContent=o;},1400);
+}
+function cpAll(tags){
+  navigator.clipboard.writeText(tags.join(" ")).catch(()=>{});
+  event.target.textContent="✓ Kopyalandı";
+  setTimeout(()=>event.target.textContent="Hepsini Kopyala",1600);
+}
+
+// ══ RENDER ═════════════════════════════════
+function rf(){renderFrame();}
 
 function renderFrame(){
   if(!vid.videoWidth) return;
-  const W=cv.width, H=cv.height;
-
-  // BG image
-  if(bgImgObj){ ctx.drawImage(bgImgObj,0,0,W,H); ctx.globalAlpha=0.6; }
-
-  // Video with effect
-  const eff=S.bgEffect;
+  const W=cv.width,H=cv.height,eff=S.bgEffect;
+  if(bgImgObj){ctx.drawImage(bgImgObj,0,0,W,H);ctx.globalAlpha=0.6;}
   if(eff==="blur"){ctx.filter="blur(8px)";ctx.drawImage(vid,-12,-12,W+24,H+24);ctx.filter="none";}
   else if(eff==="bw"){ctx.filter="grayscale(100%)";ctx.drawImage(vid,0,0,W,H);ctx.filter="none";}
   else if(eff==="sepia"){ctx.filter="sepia(80%) brightness(.88)";ctx.drawImage(vid,0,0,W,H);ctx.filter="none";}
   else{ctx.drawImage(vid,0,0,W,H);}
   ctx.globalAlpha=1;
-
-  if(eff==="dark")  {ctx.fillStyle="rgba(0,0,0,.45)";ctx.fillRect(0,0,W,H);}
-  if(eff==="blue")  {ctx.fillStyle="rgba(20,40,180,.35)";ctx.fillRect(0,0,W,H);}
+  if(eff==="dark"){ctx.fillStyle="rgba(0,0,0,.45)";ctx.fillRect(0,0,W,H);}
+  if(eff==="blue"){ctx.fillStyle="rgba(20,40,180,.35)";ctx.fillRect(0,0,W,H);}
   if(eff==="purple"){ctx.fillStyle="rgba(80,20,160,.38)";ctx.fillRect(0,0,W,H);}
-  if(eff==="night") {const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,"rgba(10,0,40,.5)");g.addColorStop(1,"rgba(40,10,80,.45)");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+  if(eff==="night"){const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,"rgba(10,0,40,.5)");g.addColorStop(1,"rgba(40,10,80,.45)");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
 
-  // Text overlay
+  // Text
   const txt=document.getElementById("overlayText").value;
   if(txt.trim()){
     const fs=Math.max(14,Math.min(S.fontSize,90));
-    ctx.font=`bold ${fs}px '${FONTS[S.fontIdx].f}', Arial`;
+    ctx.font=`bold ${fs}px '${FONTS[S.fontIdx].f}',Arial`;
     ctx.textAlign="center";
-    const lines=txt.split("\n");
-    const lh=fs*1.45,tot=lines.length*lh;
+    const lines=txt.split("\n"),lh=fs*1.45,tot=lines.length*lh;
     let sy=S.textPos==="top"?fs+50:S.textPos==="center"?(H-tot)/2+fs:H-tot-60;
     lines.forEach((ln,i)=>{
       if(!ln.trim()) return;
@@ -421,101 +384,44 @@ function renderFrame(){
   drawCard();
 }
 
-// ── PROFILE CARD ─────────────────────────────
+// ── CARD ────────────────────────────────────
 function cardDims(){
   const sc=cv.width/1080;
   return{imgS:88*sc,pad:14*sc,cardH:116*sc,cardW:360*sc,fn:30*sc,fh:20*sc,rad:18*sc};
 }
-
 function drawCard(){
   if(!S.card.visible) return;
-  const name=document.getElementById("cardName").value||S.card.name;
-  const handle=document.getElementById("cardHandle").value||S.card.handle;
+  const name=document.getElementById("cardName").value;
+  const handle=document.getElementById("cardHandle").value;
   if(!name&&!handle&&!S.card.img) return;
-  const {imgS,pad,cardH,cardW,fn,fh,rad}=cardDims();
-  const x=S.card.x*cv.width, y=S.card.y*cv.height;
-
-  // pill background
+  const{imgS,pad,cardH,cardW,fn,fh,rad}=cardDims();
+  const x=S.card.x*cv.width,y=S.card.y*cv.height;
   ctx.fillStyle="rgba(0,0,0,.72)";
-  rrect(x,y,cardW,cardH,rad);
-  ctx.fill();
-
-  // avatar circle
-  const ax=x+pad+imgS/2, ay=y+pad+imgS/2;
-  ctx.save();
-  ctx.beginPath();ctx.arc(ax,ay,imgS/2,0,Math.PI*2);ctx.clip();
+  ctx.beginPath();ctx.moveTo(x+rad,y);ctx.lineTo(x+cardW-rad,y);ctx.arcTo(x+cardW,y,x+cardW,y+rad,rad);ctx.lineTo(x+cardW,y+cardH-rad);ctx.arcTo(x+cardW,y+cardH,x+cardW-rad,y+cardH,rad);ctx.lineTo(x+rad,y+cardH);ctx.arcTo(x,y+cardH,x,y+cardH-rad,rad);ctx.lineTo(x,y+rad);ctx.arcTo(x,y,x+rad,y,rad);ctx.closePath();ctx.fill();
+  const ax=x+pad+imgS/2,ay=y+pad+imgS/2;
+  ctx.save();ctx.beginPath();ctx.arc(ax,ay,imgS/2,0,Math.PI*2);ctx.clip();
   if(S.card.img){ctx.drawImage(S.card.img,x+pad,y+pad,imgS,imgS);}
-  else{
-    const g=ctx.createRadialGradient(ax,ay,0,ax,ay,imgS/2);
-    g.addColorStop(0,"#7c9cff");g.addColorStop(1,"#b47fff");
-    ctx.fillStyle=g;ctx.fillRect(x+pad,y+pad,imgS,imgS);
-    ctx.font=`bold ${imgS*.38}px Arial`;ctx.fillStyle="#fff";ctx.textAlign="center";
-    ctx.fillText((name||"?").charAt(0).toUpperCase(),ax,ay+imgS*.14);
-  }
+  else{const g=ctx.createRadialGradient(ax,ay,0,ax,ay,imgS/2);g.addColorStop(0,"#7c9cff");g.addColorStop(1,"#b47fff");ctx.fillStyle=g;ctx.fillRect(x+pad,y+pad,imgS,imgS);ctx.font=`bold ${imgS*.38}px Arial`;ctx.fillStyle="#fff";ctx.textAlign="center";ctx.fillText((name||"?").charAt(0).toUpperCase(),ax,ay+imgS*.14);}
   ctx.restore();
-
-  // border ring
-  ctx.strokeStyle="rgba(255,255,255,.25)";ctx.lineWidth=2*cv.width/1080;
-  ctx.beginPath();ctx.arc(ax,ay,imgS/2,0,Math.PI*2);ctx.stroke();
-
-  // text
+  ctx.strokeStyle="rgba(255,255,255,.25)";ctx.lineWidth=2*cv.width/1080;ctx.beginPath();ctx.arc(ax,ay,imgS/2,0,Math.PI*2);ctx.stroke();
   const tx=x+pad+imgS+pad*1.2;
-  ctx.textAlign="left";
-  ctx.shadowColor="rgba(0,0,0,.9)";ctx.shadowBlur=8;
-  ctx.font=`700 ${fn}px 'Montserrat',Arial`;
-  ctx.fillStyle="#ffffff";
-  ctx.fillText(name||"",tx,y+cardH/2-fn*.1);
-  ctx.font=`${fh}px 'Montserrat',Arial`;
-  ctx.fillStyle="rgba(255,255,255,.62)";
-  const h=handle.startsWith("@")?handle:"@"+handle;
-  ctx.fillText(h,tx,y+cardH/2+fh*1.1);
+  ctx.textAlign="left";ctx.shadowColor="rgba(0,0,0,.9)";ctx.shadowBlur=8;
+  ctx.font=`700 ${fn}px 'Montserrat',Arial`;ctx.fillStyle="#ffffff";ctx.fillText(name||"",tx,y+cardH/2-fn*.1);
+  ctx.font=`${fh}px 'Montserrat',Arial`;ctx.fillStyle="rgba(255,255,255,.62)";
+  const h=handle.startsWith("@")?handle:"@"+handle;ctx.fillText(h,tx,y+cardH/2+fh*1.1);
   ctx.shadowBlur=0;
 }
 
-function rrect(x,y,w,h,r){
-  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
-}
-
-// ── DRAG ─────────────────────────────────────
-function canvasPos(e){
-  const rect=cv.getBoundingClientRect();
-  const t=e.touches?e.touches[0]:e;
-  return{x:(t.clientX-rect.left)*(cv.width/rect.width),y:(t.clientY-rect.top)*(cv.height/rect.height)};
-}
-function onCard(cx,cy){
-  const {cardW,cardH}=cardDims();
-  const ox=S.card.x*cv.width,oy=S.card.y*cv.height;
-  return cx>=ox&&cx<=ox+cardW&&cy>=oy&&cy<=oy+cardH;
-}
-function dragStart(e){
-  const p=canvasPos(e);
-  if(onCard(p.x,p.y)){
-    e.preventDefault();
-    S.card.dragging=true;
-    S.card.ox=p.x-S.card.x*cv.width;
-    S.card.oy=p.y-S.card.y*cv.height;
-    cv.classList.add("dragging");
-  }
-}
-function dragMove(e){
-  if(!S.card.dragging) return;
-  e.preventDefault();
-  const p=canvasPos(e);
-  const {cardW,cardH}=cardDims();
-  S.card.x=Math.max(0,Math.min(1-cardW/cv.width,(p.x-S.card.ox)/cv.width));
-  S.card.y=Math.max(0,Math.min(1-cardH/cv.height,(p.y-S.card.oy)/cv.height));
-}
+// ── DRAG ────────────────────────────────────
+function canvasPos(e){const r=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:(t.clientX-r.left)*(cv.width/r.width),y:(t.clientY-r.top)*(cv.height/r.height)};}
+function onCard(cx,cy){const{cardW,cardH}=cardDims();const ox=S.card.x*cv.width,oy=S.card.y*cv.height;return cx>=ox&&cx<=ox+cardW&&cy>=oy&&cy<=oy+cardH;}
+function dragStart(e){const p=canvasPos(e);if(onCard(p.x,p.y)){e.preventDefault();S.card.dragging=true;S.card.ox=p.x-S.card.x*cv.width;S.card.oy=p.y-S.card.y*cv.height;cv.classList.add("dragging");}}
+function dragMove(e){if(!S.card.dragging)return;e.preventDefault();const p=canvasPos(e);const{cardW,cardH}=cardDims();S.card.x=Math.max(0,Math.min(1-cardW/cv.width,(p.x-S.card.ox)/cv.width));S.card.y=Math.max(0,Math.min(1-cardH/cv.height,(p.y-S.card.oy)/cv.height));}
 function dragEnd(){S.card.dragging=false;cv.classList.remove("dragging");}
-cv.addEventListener("mousedown",dragStart);
-cv.addEventListener("mousemove",dragMove);
-cv.addEventListener("mouseup",dragEnd);
-cv.addEventListener("touchstart",dragStart,{passive:false});
-cv.addEventListener("touchmove",dragMove,{passive:false});
-cv.addEventListener("touchend",dragEnd);
+cv.addEventListener("mousedown",dragStart);cv.addEventListener("mousemove",dragMove);cv.addEventListener("mouseup",dragEnd);
+cv.addEventListener("touchstart",dragStart,{passive:false});cv.addEventListener("touchmove",dragMove,{passive:false});cv.addEventListener("touchend",dragEnd);
 
-// ══════════════════════════════════════════════
-// VIDEO LOAD & PLAYBACK
-// ══════════════════════════════════════════════
+// ══ VIDEO ══════════════════════════════════
 document.getElementById("fileInput").addEventListener("change",e=>{if(e.target.files[0])loadVid(e.target.files[0]);});
 const dz=document.getElementById("dropZone");
 dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("drag");});
@@ -532,41 +438,24 @@ function loadVid(file){
     document.getElementById("btnNew").style.display="block";
     vid.addEventListener("timeupdate",updateTime);
     vid.addEventListener("ended",()=>{S.playing=false;document.getElementById("playBtn").textContent="▶";});
-    startLoop();
-    updateApiStatus();
+    if(S.rafId) cancelAnimationFrame(S.rafId);
+    (function loop(){renderFrame();S.rafId=requestAnimationFrame(loop);})();
   };
 }
-function startLoop(){
-  if(S.rafId) cancelAnimationFrame(S.rafId);
-  (function loop(){renderFrame();S.rafId=requestAnimationFrame(loop);})();
-}
-function togglePlay(){
-  if(S.playing){vid.pause();S.playing=false;document.getElementById("playBtn").textContent="▶";}
-  else{vid.play();S.playing=true;document.getElementById("playBtn").textContent="⏸";}
-}
+function togglePlay(){if(S.playing){vid.pause();S.playing=false;document.getElementById("playBtn").textContent="▶";}else{vid.play();S.playing=true;document.getElementById("playBtn").textContent="⏸";}}
 function seek(e){const r=e.currentTarget.getBoundingClientRect();vid.currentTime=(e.clientX-r.left)/r.width*(vid.duration||0);}
 function updateTime(){const d=vid.duration||0,c=vid.currentTime||0;document.getElementById("pfill").style.width=(d?c/d*100:0)+"%";document.getElementById("ttime").textContent=fmt(c)+" / "+fmt(d);}
 function fmt(s){return Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0")}
 
-// ══════════════════════════════════════════════
-// UI HELPERS
-// ══════════════════════════════════════════════
+// ══ UI ═════════════════════════════════════
 function switchTab(name,btn){
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));btn.classList.add("on");
   const map={text:"tabText",bg:"tabBg",card:"tabCard",hash:"tabHash"};
   Object.values(map).forEach(id=>document.getElementById(id).style.display="none");
   document.getElementById(map[name]).style.display="block";
 }
-function toggleTxtBg(){
-  S.showBg=!S.showBg;const b=document.getElementById("bgToggle");
-  b.className="toggle-btn"+(S.showBg?" on":"");
-  b.textContent=S.showBg?"✓ Metin Arka Planı Açık":"Metin Arka Planı Kapalı";rf();
-}
-function toggleCard(){
-  S.card.visible=!S.card.visible;const b=document.getElementById("cardToggle");
-  b.className="toggle-btn"+(S.card.visible?" on":"");
-  b.textContent=S.card.visible?"✓ İmza Kartı Görünür":"İmza Kartı Gizli";rf();
-}
+function toggleTxtBg(){S.showBg=!S.showBg;const b=document.getElementById("bgToggle");b.className="toggle-btn"+(S.showBg?" on":"");b.textContent=S.showBg?"✓ Metin Arka Planı Açık":"Metin Arka Planı Kapalı";rf();}
+function toggleCard(){S.card.visible=!S.card.visible;const b=document.getElementById("cardToggle");b.className="toggle-btn"+(S.card.visible?" on":"");b.textContent=S.card.visible?"✓ İmza Kartı Görünür":"İmza Kartı Gizli";rf();}
 function resetApp(){
   if(S.rafId) cancelAnimationFrame(S.rafId);
   vid.src="";S.playing=false;bgImgObj=null;S.card.img=null;
@@ -579,90 +468,11 @@ function resetApp(){
   document.getElementById("hashResult").innerHTML="";
   document.getElementById("avatarPreview").style.display="none";
   document.getElementById("avatarPlaceholder").style.display="block";
+  document.querySelectorAll(".cat-btn").forEach(x=>x.classList.remove("sel"));
   document.getElementById("fileInput").value="";
 }
 
-// ══════════════════════════════════════════════
-// API KEY
-// ══════════════════════════════════════════════
-function openModal(){
-  const k=localStorage.getItem("ant_key")||"";
-  document.getElementById("apiKeyInput").value=k;
-  document.getElementById("apiModal").style.display="flex";
-  document.getElementById("apiStatus").innerHTML=k?'<div class="api-status api-ok">✓ Anahtar kayıtlı</div>':'<div class="api-status api-no">⚠ Henüz anahtar girilmedi</div>';
-}
-function closeModal(){document.getElementById("apiModal").style.display="none";}
-function saveApiKey(){
-  const k=document.getElementById("apiKeyInput").value.trim();
-  if(k){localStorage.setItem("ant_key",k);document.getElementById("apiStatus").innerHTML='<div class="api-status api-ok">✓ Kaydedildi!</div>';updateApiStatus();setTimeout(closeModal,900);}
-  else{localStorage.removeItem("ant_key");closeModal();}
-}
-function updateApiStatus(){
-  const el=document.getElementById("apiKeyStatus");if(!el) return;
-  const k=localStorage.getItem("ant_key");
-  el.innerHTML=k?'<div class="api-status api-ok" style="font-size:10px;padding:5px 8px;border-radius:6px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);color:var(--ok);margin-bottom:8px">✓ API anahtarı ayarlı — TikTok arama aktif</div>':'<div class="api-status api-no" style="font-size:10px;padding:5px 8px;border-radius:6px;background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);color:#fb923c;margin-bottom:8px">⚠ API anahtarı yok — <span style="cursor:pointer;text-decoration:underline" onclick="openModal()">buraya tıkla ekle</span></div>';
-}
-document.addEventListener("DOMContentLoaded",updateApiStatus);
-
-// ══════════════════════════════════════════════
-// HASHTAG GENERATION (with web search)
-// ══════════════════════════════════════════════
-async function generateHashtags(){
-  const desc=document.getElementById("hashDesc").value;
-  const btn=document.getElementById("btnGen");
-  const ldr=document.getElementById("genLoader");
-  btn.disabled=true;btn.textContent="🔍 TikTok taranıyor...";ldr.style.display="block";
-  document.getElementById("hashResult").innerHTML="";
-
-  const key=localStorage.getItem("ant_key")||"";
-  const headers={
-  "Content-Type":"application/json",
-  "anthropic-dangerous-direct-browser-access":"true"
-};
-if(key) headers["x-api-key"]=key;
-  try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",
-      headers,
-      body:JSON.stringify({
-        model:"claude-sonnet-4-20250514",
-        max_tokens:1200,
-        tools:[{type:"web_search_20250305",name:"web_search"}],
-        messages:[{role:"user",content:`Search TikTok Turkey trending hashtags 2026 for sad emotional aesthetic content. Search for "tiktok türkiye keşfet hüzün hashtag 2026" and similar queries. Topic: "${desc||'hüzünlü duygusal video'}".
-
-After searching, respond ONLY with JSON (no other text):
-{"tags":["#tag1","#tag2","#tag3","#tag4","#tag5","#tag6","#tag7","#tag8","#tag9","#tag10","#tag11","#tag12","#tag13","#tag14","#tag15","#tag16","#tag17","#tag18","#tag19","#tag20"]}`}]
-      })
-    });
-    const d=await res.json();
-    // collect all text blocks
-    if(!d || !d.content) throw new Error(d?.error?.message||"API yanıt vermedi");
-const allText=(d.content||[]).filter(c=>c&&c.type==="text").map(c=>c.text||"").join("");
-    const match=allText.match(/\{[\s\S]*\}/);
-    if(!match) throw new Error("JSON bulunamadı");
-    const parsed=JSON.parse(match[0]);
-    buildCloud(parsed.tags||[]);
-  }catch(e){
-    document.getElementById("hashResult").innerHTML=`<p style="font-size:11px;color:#fb923c;margin-top:8px">Hata: ${e.message.includes("401")||e.message.includes("auth")?"API anahtarı gerekli — sağ üstteki 🔑 butonuna tıkla":e.message}</p>`;
-  }
-  btn.disabled=false;btn.textContent="🔍 TikTok'u Tara & Hashtag Üret";ldr.style.display="none";
-}
-
-function buildCloud(tags){
-  const el=document.getElementById("hashResult");
-  el.innerHTML=`<div class="top-row" style="margin-top:10px">
-    <span style="font-size:10px;color:var(--m)">${tags.length} hashtag bulundu</span>
-    <button class="btn-copy" onclick="cpAll()">Hepsini Kopyala</button>
-  </div>
-  <div class="hcloud">${tags.map(t=>`<span class="htag" onclick="cpTag(this,'${t}')">${t}</span>`).join("")}</div>`;
-  window._tags=tags;
-}
-function cpTag(el,t){navigator.clipboard.writeText(t).catch(()=>{});const o=el.textContent;el.className="htag cp";el.textContent="✓";setTimeout(()=>{el.className="htag";el.textContent=o;},1400);}
-function cpAll(){navigator.clipboard.writeText((window._tags||[]).join(" ")).catch(()=>{});const b=document.querySelector("[onclick='cpAll()']");b.textContent="✓ Kopyalandı";setTimeout(()=>b.textContent="Hepsini Kopyala",1600);}
-
-// ══════════════════════════════════════════════
-// DOWNLOAD
-// ══════════════════════════════════════════════
+// ══ DOWNLOAD ═══════════════════════════════
 async function downloadVideo(){
   document.getElementById("dlSection").style.display="none";
   document.getElementById("dlProgress").style.display="block";
@@ -677,7 +487,8 @@ async function downloadVideo(){
     const chunks=[];
     rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
     rec.onstop=()=>{
-      const blob=new Blob(chunks,{type:mime});const url=URL.createObjectURL(blob);
+      const blob=new Blob(chunks,{type:mime});
+      const url=URL.createObjectURL(blob);
       const a=document.createElement("a");a.href=url;a.download="video_"+Date.now()+".webm";a.click();
       URL.revokeObjectURL(url);
       document.getElementById("dlSection").style.display="block";
