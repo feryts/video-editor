@@ -1,12 +1,592 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Video Editör</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Hisset & Viral Ol — Video Editör</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;1,400&family=Bebas+Neue&family=Raleway:wght@300;700&family=Shadows+Into+Light&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080b13;--s1:#0d1020;--s2:#121520;--s3:#181c2c;
+  --b:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);
+  --a:#7c9cff;--a2:#b47fff;--t:#e0e4f5;--m:#5a6580;--ok:#4ade80
+}
+body{background:var(--bg);font-family:'Montserrat',sans-serif;color:var(--t);min-height:100vh}
+.app{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 5% -5%,rgba(100,60,220,.12) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 50% at 95% 105%,rgba(60,80,200,.10) 0%,transparent 50%),
+    var(--bg)
+}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;border-bottom:1px solid var(--b);
+  background:rgba(8,11,19,.88);backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:10
+}
+.logo{font-size:15px;font-weight:700;letter-spacing:.05em}
+.logo span{background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.main{max-width:1060px;margin:0 auto;padding:20px 14px 60px}
+/* UPLOAD */
+.upload-wrap{max-width:480px;margin:36px auto;text-align:center}
+.upload-wrap h1{font-size:clamp(26px,5vw,42px);font-weight:700;margin-bottom:8px}
+.upload-wrap h1 span{background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.upload-wrap p{color:var(--m);font-size:13px;margin-bottom:24px}
+.drop-zone{
+  border:2px dashed var(--b2);border-radius:20px;padding:48px 20px;
+  cursor:pointer;transition:all .22s;background:var(--s1)
+}
+.drop-zone:hover{border-color:var(--a);background:rgba(124,156,255,.05)}
+.drop-icon{font-size:44px;display:block;margin-bottom:12px}
+.drop-zone h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.drop-zone p{color:var(--m);font-size:12px}
+/* EDITOR */
+.editor{display:grid;grid-template-columns:1fr 310px;gap:14px;align-items:start}
+@media(max-width:720px){.editor{grid-template-columns:1fr}}
+/* VIDEO */
+.canvas-wrap{
+  position:relative;border-radius:16px;overflow:hidden;background:#000;
+  aspect-ratio:9/16;max-height:76vh;box-shadow:0 20px 60px rgba(0,0,0,.7)
+}
+.canvas-wrap canvas{width:100%;height:100%;object-fit:contain;display:block}
+.canvas-wrap video{display:none}
+.controls{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,.75));
+  padding:20px 14px 12px
+}
+.ctrl-row{display:flex;align-items:center;gap:10px}
+.play-btn{
+  width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.28);color:#fff;font-size:13px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0
+}
+.play-btn:hover{background:rgba(255,255,255,.28)}
+.pbar{flex:1;height:3px;background:rgba(255,255,255,.2);border-radius:3px;cursor:pointer;position:relative}
+.pfill{height:100%;background:var(--a);border-radius:3px}
+.ttime{color:rgba(255,255,255,.6);font-size:10px;flex-shrink:0;font-family:monospace}
+/* PANEL */
+.panel{display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;background:var(--s2);border-radius:10px;padding:3px;border:1px solid var(--b)}
+.tab{
+  flex:1;padding:8px 4px;border:none;border-radius:7px;
+  background:transparent;color:var(--m);font-family:'Montserrat',sans-serif;
+  font-size:10px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:all .15s
+}
+.tab.on{background:var(--s3);color:var(--t);border:1px solid var(--b2)}
+.card{background:var(--s1);border:1px solid var(--b);border-radius:14px;padding:16px}
+.clabel{
+  font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--a);margin-bottom:10px;display:flex;align-items:center;gap:7px
+}
+.clabel::after{content:'';flex:1;height:1px;background:var(--b)}
+textarea,.desc-input{
+  width:100%;background:var(--s3);border:1px solid var(--b);border-radius:9px;
+  padding:10px 12px;color:var(--t);font-family:'Montserrat',sans-serif;font-size:13px;
+  line-height:1.6;outline:none;resize:none;transition:border-color .2s
+}
+textarea:focus,.desc-input:focus{border-color:rgba(124,156,255,.4)}
+textarea::placeholder,.desc-input::placeholder{color:var(--m)}
+.desc-input{margin-bottom:8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.fld label{display:block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--m);margin-bottom:4px}
+select{
+  width:100%;background:var(--s3);border:1px solid var(--b);border-radius:8px;
+  padding:8px 10px;color:var(--t);font-family:'Montserrat',sans-serif;
+  font-size:11px;outline:none;cursor:pointer;appearance:none
+}
+input[type=range]{width:100%;accent-color:var(--a)}
+.color-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:6px 0}
+.cchip{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
+.cchip.sel{border-color:#fff;transform:scale(1.18)}
+.toggle-btn{
+  width:100%;background:var(--s3);border:1px solid var(--b);border-radius:8px;
+  padding:8px;color:var(--m);font-family:'Montserrat',sans-serif;font-size:11px;
+  cursor:pointer;transition:all .15s;margin-top:6px
+}
+.toggle-btn.on{background:rgba(124,156,255,.1);border-color:var(--a);color:var(--a)}
+.font-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.font-chip{
+  background:var(--s3);border:1px solid var(--b);border-radius:8px;
+  padding:8px 6px;cursor:pointer;transition:all .15s;text-align:center;font-size:12px
+}
+.font-chip.sel{border-color:var(--a);background:rgba(124,156,255,.1);color:var(--a)}
+.bg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.bg-chip{
+  background:var(--s3);border:1px solid var(--b);border-radius:9px;
+  padding:8px 4px;cursor:pointer;transition:all .15s;text-align:center
+}
+.bg-chip .bi{font-size:17px;display:block;margin-bottom:2px}
+.bg-chip .bl{font-size:9px;color:var(--m)}
+.bg-chip.sel{border-color:var(--a);background:rgba(124,156,255,.1)}
+.bg-chip.sel .bl{color:var(--a)}
+.hcloud{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.htag{
+  background:rgba(124,156,255,.07);border:1px solid rgba(124,156,255,.18);
+  border-radius:6px;padding:4px 9px;font-size:11px;color:var(--a);
+  cursor:pointer;transition:all .15s;user-select:none
+}
+.htag:hover{background:rgba(124,156,255,.15)}
+.htag.cp{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25);color:var(--ok)}
+.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.btn-ai{
+  width:100%;padding:11px;background:linear-gradient(135deg,#4b6dff,#8b4fff);
+  border:none;border-radius:10px;color:#fff;font-family:'Montserrat',sans-serif;
+  font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.04em
+}
+.btn-ai:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(75,109,255,.35)}
+.btn-ai:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-copy{
+  background:var(--s3);border:1px solid var(--b);border-radius:8px;
+  padding:6px 12px;color:var(--m);font-family:'Montserrat',sans-serif;font-size:10px;
+  cursor:pointer;transition:all .15s;font-weight:700
+}
+.btn-copy:hover{border-color:var(--a);color:var(--a)}
+.btn-new{
+  background:var(--s2);border:1px solid var(--b);border-radius:8px;
+  padding:8px 14px;color:var(--t);font-family:'Montserrat',sans-serif;font-size:12px;
+  cursor:pointer;transition:all .15s
+}
+.lbar{width:100%;height:2px;background:var(--b);border-radius:2px;overflow:hidden;margin:8px 0}
+.lbar-f{height:100%;background:linear-gradient(90deg,var(--a),var(--a2));animation:lb 1.3s ease-in-out infinite}
+@keyframes lb{0%{width:0;margin-left:0}50%{width:55%;margin-left:20%}100%{width:0;margin-left:100%}}
+.dl-btn{
+  width:100%;padding:15px;background:linear-gradient(135deg,#22c55e,#16a34a);
+  border:none;border-radius:12px;color:#fff;font-family:'Montserrat',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.04em;margin-top:10px
+}
+.dl-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(34,197,94,.35)}
+.dl-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.dl-prog{background:var(--s1);border:1px solid var(--b);border-radius:12px;padding:14px;text-align:center;margin-top:10px}
+.dl-pbar{width:100%;height:5px;background:var(--b);border-radius:3px;overflow:hidden;margin:8px 0}
+.dl-pfill{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:3px;transition:width .3s}
+.note{font-size:10px;color:var(--m);line-height:1.5;padding:8px;background:rgba(255,255,255,.02);border-radius:7px;border-left:2px solid var(--b2);margin-top:8px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fadeUp .3s ease}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="logo">Hisset <span>&amp; Viral Ol</span></div>
+    <button class="btn-new" id="btnNew" style="display:none" onclick="resetApp()">↩ Yeni Video</button>
+  </nav>
+  <div class="main">
+
+    <!-- UPLOAD SCREEN -->
+    <div class="upload-wrap fade" id="uploadScreen">
+      <h1>Video <span>Editörü</span></h1>
+      <p>Videoyu yükle — arka plan, metin, hashtag, indir</p>
+      <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <span class="drop-icon">🎬</span>
+        <h3>Videonu buraya sürükle</h3>
+        <p>veya tıkla • MP4, MOV, WEBM</p>
+      </div>
+      <input type="file" id="fileInput" accept="video/*" style="display:none"/>
+    </div>
+
+    <!-- EDITOR SCREEN -->
+    <div class="editor fade" id="editorScreen" style="display:none">
+
+      <!-- VIDEO COL -->
+      <div>
+        <div class="canvas-wrap">
+          <video id="vid" playsinline preload="auto"></video>
+          <canvas id="cv"></canvas>
+          <div class="controls">
+            <div class="ctrl-row">
+              <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+              <div class="pbar" id="pbar" onclick="seek(event)">
+                <div class="pfill" id="pfill" style="width:0%"></div>
+              </div>
+              <span class="ttime" id="ttime">0:00 / 0:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOWNLOAD -->
+        <div id="dlSection">
+          <button class="dl-btn" onclick="downloadVideo()">⬇ Videoyu İndir</button>
+          <p class="note">📱 Android Chrome'da direkt açılır. iPhone için CapCut'ta aç.</p>
+        </div>
+        <div id="dlProgress" style="display:none">
+          <div class="dl-prog">
+            <p style="font-size:13px;font-weight:600">🎬 Video kaydediliyor...</p>
+            <div class="dl-pbar"><div class="dl-pfill" id="dlPfill" style="width:0%"></div></div>
+            <p style="font-size:11px;color:var(--m)">Video oynatılıyor, bitince indirilecek</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL -->
+      <div class="panel">
+        <div class="tabs">
+          <button class="tab on" onclick="switchTab('text',this)">📝 METİN</button>
+          <button class="tab" onclick="switchTab('bg',this)">🎨 ARKA PLAN</button>
+          <button class="tab" onclick="switchTab('hash',this)"># HASHTAG</button>
+        </div>
+
+        <!-- TEXT TAB -->
+        <div class="card" id="tabText">
+          <div class="clabel">Metin</div>
+          <textarea id="overlayText" rows="3" placeholder="Videoya eklenecek yazı..." oninput="renderFrame()" style="margin-bottom:10px"></textarea>
+
+          <div class="clabel">Yazı Tipi</div>
+          <div class="font-grid" id="fontGrid"></div>
+
+          <div class="row2">
+            <div class="fld">
+              <label>Konum</label>
+              <select onchange="state.textPos=this.value;renderFrame()">
+                <option value="bottom">Alt</option>
+                <option value="center">Orta</option>
+                <option value="top">Üst</option>
+              </select>
+            </div>
+            <div class="fld">
+              <label>Boyut — <span id="fsLabel">38</span>px</label>
+              <input type="range" min="14" max="80" value="38" oninput="state.fontSize=+this.value;document.getElementById('fsLabel').textContent=this.value;renderFrame()"/>
+            </div>
+          </div>
+
+          <div class="clabel">Renk</div>
+          <div class="color-row" id="colorRow"></div>
+
+          <button class="toggle-btn on" id="bgToggle" onclick="toggleTextBg()">✓ Metin Arka Planı Açık</button>
+        </div>
+
+        <!-- BG TAB -->
+        <div class="card" id="tabBg" style="display:none">
+          <div class="clabel">Arka Plan Efekti</div>
+          <div class="bg-grid" id="bgGrid"></div>
+          <p class="note" style="margin-top:10px">Efekt anında önizlemede görünür</p>
+        </div>
+
+        <!-- HASHTAG TAB -->
+        <div class="card" id="tabHash" style="display:none">
+          <div class="clabel">Hashtag Üret</div>
+          <input class="desc-input" id="hashDesc" placeholder="Video ne hakkında? Ör: gece yağmur, özlem..."/>
+          <button class="btn-ai" id="btnAI" onclick="generateTags()">✦ Hashtag Üret</button>
+          <div class="lbar" id="aiLoader" style="display:none"><div class="lbar-f"></div></div>
+          <div id="tagResult"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const FONTS = [
+  {label:"Montserrat",   family:"Montserrat"},
+  {label:"Playfair",     family:"Playfair Display"},
+  {label:"El Yazısı",    family:"Dancing Script"},
+  {label:"Bebas",        family:"Bebas Neue"},
+  {label:"Raleway İnce", family:"Raleway"},
+  {label:"Karakalem",    family:"Shadows Into Light"},
+  {label:"Great Vibes",  family:"Great Vibes"},
+];
+const COLORS = ["#ffffff","#000000","#f8d7ff","#d0e8ff","#ffe4c4","#c8ffd4","#ffb3b3"];
+const BGS = [
+  {id:"none",  icon:"🎬", label:"Orijinal"},
+  {id:"dark",  icon:"🌑", label:"Karartma"},
+  {id:"blur",  icon:"🌫️", label:"Bulanık"},
+  {id:"blue",  icon:"💙", label:"Mavi Ton"},
+  {id:"purple",icon:"💜", label:"Mor Ton"},
+  {id:"bw",    icon:"🎞️", label:"Siyah Beyaz"},
+  {id:"night", icon:"🌌", label:"Gece Moru"},
+  {id:"sepia", icon:"🍂", label:"Sıcak Sepia"},
+];
+
+const state = {
+  fontIdx: 0, textPos: "bottom", textColor: "#ffffff",
+  fontSize: 38, showBg: true, bgEffect: "none",
+  playing: false, rafId: null
+};
+
+const vid = document.getElementById("vid");
+const cv  = document.getElementById("cv");
+const ctx = cv.getContext("2d");
+
+// Build font grid
+const fg = document.getElementById("fontGrid");
+FONTS.forEach((f, i) => {
+  const d = document.createElement("div");
+  d.className = "font-chip" + (i===0?" sel":"");
+  d.style.fontFamily = f.family;
+  d.textContent = f.label;
+  d.onclick = () => {
+    document.querySelectorAll(".font-chip").forEach(x=>x.classList.remove("sel"));
+    d.classList.add("sel");
+    state.fontIdx = i;
+    renderFrame();
+  };
+  fg.appendChild(d);
+});
+
+// Build color row
+const cr = document.getElementById("colorRow");
+COLORS.forEach(c => {
+  const d = document.createElement("div");
+  d.className = "cchip" + (c==="#ffffff"?" sel":"");
+  d.style.background = c;
+  d.style.boxShadow = "0 0 0 1px rgba(255,255,255,.15)";
+  d.onclick = () => {
+    document.querySelectorAll(".cchip").forEach(x=>x.classList.remove("sel"));
+    d.classList.add("sel");
+    state.textColor = c;
+    renderFrame();
+  };
+  cr.appendChild(d);
+});
+// custom color picker
+const cp2 = document.createElement("input");
+cp2.type="color"; cp2.value="#ffffff";
+cp2.style="width:24px;height:24px;border:1px solid var(--b2);border-radius:50%;cursor:pointer;padding:1px;background:none";
+cp2.oninput = () => { state.textColor=cp2.value; renderFrame(); };
+cr.appendChild(cp2);
+
+// Build bg grid
+const bg = document.getElementById("bgGrid");
+BGS.forEach(b => {
+  const d = document.createElement("div");
+  d.className = "bg-chip" + (b.id==="none"?" sel":"");
+  d.id = "bg_"+b.id;
+  d.innerHTML = `<span class="bi">${b.icon}</span><span class="bl">${b.label}</span>`;
+  d.onclick = () => {
+    document.querySelectorAll(".bg-chip").forEach(x=>x.classList.remove("sel"));
+    d.classList.add("sel");
+    state.bgEffect = b.id;
+    renderFrame();
+  };
+  bg.appendChild(d);
+});
+
+// File input
+document.getElementById("fileInput").addEventListener("change", e => {
+  if(e.target.files[0]) loadVideo(e.target.files[0]);
+});
+
+// Drag & drop
+const dz = document.getElementById("dropZone");
+dz.addEventListener("dragover", e=>{e.preventDefault();dz.style.borderColor="var(--a)";});
+dz.addEventListener("dragleave", ()=>dz.style.borderColor="");
+dz.addEventListener("drop", e=>{e.preventDefault();dz.style.borderColor="";if(e.dataTransfer.files[0])loadVideo(e.dataTransfer.files[0]);});
+
+function loadVideo(file) {
+  if(!file.type.startsWith("video/")) return;
+  const url = URL.createObjectURL(file);
+  vid.src = url;
+  vid.onloadedmetadata = () => {
+    cv.width  = vid.videoWidth  || 1080;
+    cv.height = vid.videoHeight || 1920;
+    document.getElementById("uploadScreen").style.display = "none";
+    document.getElementById("editorScreen").style.display = "grid";
+    document.getElementById("btnNew").style.display = "block";
+    startLoop();
+    updateTime();
+  };
+  vid.addEventListener("timeupdate", updateTime);
+  vid.addEventListener("ended", ()=>{ state.playing=false; document.getElementById("playBtn").textContent="▶"; });
+}
+
+function startLoop() {
+  if(state.rafId) cancelAnimationFrame(state.rafId);
+  function loop(){ renderFrame(); state.rafId=requestAnimationFrame(loop); }
+  loop();
+}
+
+function renderFrame() {
+  if(!vid.videoWidth) return;
+  const W=cv.width, H=cv.height;
+  const eff=state.bgEffect;
+
+  if(eff==="blur"){
+    ctx.filter="blur(8px)"; ctx.drawImage(vid,-12,-12,W+24,H+24); ctx.filter="none";
+    ctx.fillStyle="rgba(0,0,0,.15)"; ctx.fillRect(0,0,W,H);
+  } else if(eff==="bw"){
+    ctx.filter="grayscale(100%)"; ctx.drawImage(vid,0,0,W,H); ctx.filter="none";
+  } else if(eff==="sepia"){
+    ctx.filter="sepia(80%) brightness(.9)"; ctx.drawImage(vid,0,0,W,H); ctx.filter="none";
+  } else {
+    ctx.drawImage(vid,0,0,W,H);
+  }
+
+  if(eff==="dark")  { ctx.fillStyle="rgba(0,0,0,.45)"; ctx.fillRect(0,0,W,H); }
+  if(eff==="blue")  { ctx.fillStyle="rgba(20,40,180,.35)"; ctx.fillRect(0,0,W,H); }
+  if(eff==="purple"){ ctx.fillStyle="rgba(80,20,160,.38)"; ctx.fillRect(0,0,W,H); }
+  if(eff==="night") {
+    const g=ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,"rgba(10,0,40,.5)"); g.addColorStop(1,"rgba(40,10,80,.45)");
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  }
+
+  const txt = document.getElementById("overlayText").value;
+  if(txt.trim()) {
+    const fs = Math.max(14, Math.min(state.fontSize, 90));
+    const family = FONTS[state.fontIdx].family;
+    ctx.font = `bold ${fs}px '${family}', Arial`;
+    ctx.textAlign = "center";
+    const lines = txt.split("\n");
+    const lh = fs*1.45, tot=lines.length*lh;
+    let sy = state.textPos==="top" ? fs+50 : state.textPos==="center" ? (H-tot)/2+fs : H-tot-60;
+    lines.forEach((ln,i)=>{
+      if(!ln.trim()) return;
+      const y=sy+i*lh, w=ctx.measureText(ln).width;
+      if(state.showBg){
+        const p=16,r=10,rx=W/2-w/2-p,ry=y-fs,rw=w+p*2,rh=fs+12;
+        ctx.fillStyle="rgba(0,0,0,.55)";
+        ctx.beginPath();
+        ctx.moveTo(rx+r,ry);ctx.lineTo(rx+rw-r,ry);ctx.arcTo(rx+rw,ry,rx+rw,ry+r,r);
+        ctx.lineTo(rx+rw,ry+rh-r);ctx.arcTo(rx+rw,ry+rh,rx+rw-r,ry+rh,r);
+        ctx.lineTo(rx+r,ry+rh);ctx.arcTo(rx,ry+rh,rx,ry+rh-r,r);
+        ctx.lineTo(rx,ry+r);ctx.arcTo(rx,ry,rx+r,ry,r);
+        ctx.closePath();ctx.fill();
+      }
+      ctx.shadowColor="rgba(0,0,0,.9)";ctx.shadowBlur=12;
+      ctx.fillStyle=state.textColor;ctx.fillText(ln,W/2,y);
+      ctx.shadowBlur=0;
+    });
+  }
+}
+
+function togglePlay(){
+  if(state.playing){ vid.pause(); state.playing=false; document.getElementById("playBtn").textContent="▶"; }
+  else { vid.play(); state.playing=true; document.getElementById("playBtn").textContent="⏸"; }
+}
+
+function seek(e){
+  const r=e.currentTarget.getBoundingClientRect();
+  vid.currentTime=(e.clientX-r.left)/r.width*(vid.duration||0);
+}
+
+function updateTime(){
+  const d=vid.duration||0, c=vid.currentTime||0;
+  document.getElementById("pfill").style.width=(c/d*100)+"%";
+  document.getElementById("ttime").textContent=fmt(c)+" / "+fmt(d);
+}
+
+function fmt(s){return Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0")}
+
+function toggleTextBg(){
+  state.showBg=!state.showBg;
+  const b=document.getElementById("bgToggle");
+  b.className="toggle-btn"+(state.showBg?" on":"");
+  b.textContent=state.showBg?"✓ Metin Arka Planı Açık":"Metin Arka Planı Kapalı";
+  renderFrame();
+}
+
+function switchTab(name, btn){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));
+  btn.classList.add("on");
+  document.getElementById("tabText").style.display = name==="text"?"block":"none";
+  document.getElementById("tabBg").style.display   = name==="bg"?"block":"none";
+  document.getElementById("tabHash").style.display = name==="hash"?"block":"none";
+}
+
+async function generateTags(){
+  const desc = document.getElementById("hashDesc").value;
+  const btn  = document.getElementById("btnAI");
+  const ldr  = document.getElementById("aiLoader");
+  btn.disabled=true; btn.textContent="Üretiliyor..."; ldr.style.display="block";
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:600,
+        system:"Sadece JSON yanıt ver.",
+        messages:[{role:"user",content:`TikTok/Instagram 2025-2026 viral Türkçe hüzünlü içerik hashtag üret.
+Video: "${desc||'hüzünlü duygusal video'}"
+Sadece JSON: {"tags":["#tag1","#tag2","#tag3","#tag4","#tag5","#tag6","#tag7","#tag8","#tag9","#tag10","#tag11","#tag12","#tag13","#tag14","#tag15"]}`}]
+      })
+    });
+    const d=await res.json();
+    const parsed=JSON.parse((d.content?.[0]?.text||"").replace(/```json|```/g,"").trim());
+    buildTagCloud(parsed.tags||[]);
+  } catch(e){ alert("Hata oluştu, tekrar dene."); }
+  btn.disabled=false; btn.textContent="✦ Hashtag Üret"; ldr.style.display="none";
+}
+
+function buildTagCloud(tags){
+  const el=document.getElementById("tagResult");
+  el.innerHTML=`
+    <div class="top-row" style="margin-top:12px">
+      <span style="font-size:10px;color:var(--m);letter-spacing:.08em;text-transform:uppercase">${tags.length} hashtag</span>
+      <button class="btn-copy" onclick="copyAll()">Hepsini Kopyala</button>
+    </div>
+    <div class="hcloud" id="hcloud">${tags.map(t=>`<span class="htag" onclick="copyTag(this,'${t}')">${t}</span>`).join("")}</div>`;
+  window._tags=tags;
+}
+
+function copyTag(el,t){
+  navigator.clipboard.writeText(t).catch(()=>{});
+  el.className="htag cp"; el.textContent="✓";
+  setTimeout(()=>{el.className="htag";el.textContent=t;},1500);
+}
+
+function copyAll(){
+  navigator.clipboard.writeText((window._tags||[]).join(" ")).catch(()=>{});
+  const b=document.querySelector("[onclick='copyAll()']");
+  b.textContent="✓ Kopyalandı"; setTimeout(()=>b.textContent="Hepsini Kopyala",1600);
+}
+
+async function downloadVideo(){
+  document.getElementById("dlSection").style.display="none";
+  document.getElementById("dlProgress").style.display="block";
+  try {
+    const cvStream=cv.captureStream(30);
+    const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const dest=audioCtx.createMediaStreamDestination();
+    try{
+      const vs=vid.captureStream?vid.captureStream():null;
+      if(vs?.getAudioTracks().length){
+        const src=audioCtx.createMediaStreamSource(vs);
+        src.connect(dest);
+      }
+    }catch(e){}
+    const final=new MediaStream([...cvStream.getVideoTracks(),...dest.stream.getAudioTracks()]);
+    const mime=MediaRecorder.isTypeSupported("video/webm;codecs=vp9,opus")?"video/webm;codecs=vp9,opus":"video/webm";
+    const rec=new MediaRecorder(final,{mimeType:mime,videoBitsPerSecond:9000000});
+    const chunks=[];
+    rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+    rec.onstop=()=>{
+      const blob=new Blob(chunks,{type:mime});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download="video_"+Date.now()+".webm";a.click();
+      URL.revokeObjectURL(url);
+      document.getElementById("dlSection").style.display="block";
+      document.getElementById("dlProgress").style.display="none";
+      document.getElementById("dlPfill").style.width="0%";
+      audioCtx.close();
+    };
+    vid.currentTime=0; await vid.play(); state.playing=true;
+    document.getElementById("playBtn").textContent="⏸";
+    rec.start(100);
+    const dur=(vid.duration||10)*1000, t0=Date.now();
+    const iv=setInterval(()=>document.getElementById("dlPfill").style.width=Math.min(92,(Date.now()-t0)/dur*100)+"%",250);
+    setTimeout(()=>{clearInterval(iv);rec.stop();vid.pause();state.playing=false;document.getElementById("playBtn").textContent="▶";},dur+700);
+  } catch(err){
+    alert("İndirme hatası: "+err.message);
+    document.getElementById("dlSection").style.display="block";
+    document.getElementById("dlProgress").style.display="none";
+  }
+}
+
+function resetApp(){
+  if(state.rafId) cancelAnimationFrame(state.rafId);
+  vid.src=""; state.playing=false;
+  document.getElementById("uploadScreen").style.display="block";
+  document.getElementById("editorScreen").style.display="none";
+  document.getElementById("btnNew").style.display="none";
+  document.getElementById("overlayText").value="";
+  document.getElementById("tagResult").innerHTML="";
+  document.getElementById("fileInput").value="";
+}
+</script>
+</body>
 </html>
